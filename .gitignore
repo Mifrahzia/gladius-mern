@@ -3,6 +3,11 @@
 .env
 .env.local
 
+# Secrets / service account keys
+backend/src/credentials/
+backend/uploads/*
+!backend/uploads/.gitkeep
+
 # Logs
 logs
 *.log
