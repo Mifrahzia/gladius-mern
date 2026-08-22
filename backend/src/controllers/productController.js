@@ -12,8 +12,15 @@ export const getProducts = asyncHandler(async (req, res) => {
     name: { $regex: req.query.keyword, $options: 'i' }
   } : {};
 
-  const count = await Product.countDocuments({ ...keyword });
-  const products = await Product.find({ ...keyword })
+  let categoryFilter = {};
+  if (req.query.category) {
+    const category = await Category.findOne({ slug: req.query.category });
+    categoryFilter = category ? { category: category._id } : { category: null };
+  }
+
+  const filter = { ...keyword, ...categoryFilter };
+  const count = await Product.countDocuments(filter);
+  const products = await Product.find(filter)
     .populate('category', 'name slug')
     .limit(pageSize)
     .skip(pageSize * (page - 1));

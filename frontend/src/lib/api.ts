@@ -57,21 +57,32 @@ export const authApi = {
 // Products API calls
 export const productsApi = {
   getAll: (params?: { category?: string; search?: string; page?: number }) =>
-    api.get('/products', { params }),
-  
+    api.get('/products', {
+      params: {
+        category: params?.category,
+        keyword: params?.search,
+        pageNumber: params?.page,
+      },
+    }),
+
   getById: (id: string) => api.get(`/products/${id}`),
-  
+
   create: (data: FormData) =>
     api.post('/products', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  
+
   update: (id: string, data: FormData) =>
     api.put(`/products/${id}`, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }),
-  
+
   delete: (id: string) => api.delete(`/products/${id}`),
+};
+
+// Categories API calls
+export const categoriesApi = {
+  getAll: () => api.get('/products/categories'),
 };
 
 // Cart API calls
@@ -112,7 +123,7 @@ export const wishlistApi = {
 
 // Reviews API calls
 export const reviewsApi = {
-  getByProduct: (productId: string) => api.get(`/reviews/product/${productId}`),
+  getByProduct: (productId: string) => api.get(`/reviews/${productId}`),
   
   create: (data: { productId: string; rating: number; comment: string }) =>
     api.post('/reviews', data),
