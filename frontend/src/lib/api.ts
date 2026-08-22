@@ -67,6 +67,8 @@ export const productsApi = {
 
   getById: (id: string) => api.get(`/products/${id}`),
 
+  getFeatured: () => api.get('/products/featured'),
+
   create: (data: FormData) =>
     api.post('/products', data, {
       headers: { 'Content-Type': 'multipart/form-data' },
