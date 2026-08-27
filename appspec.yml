@@ -1,0 +1,30 @@
+version: 0.0
+os: linux
+
+files:
+  - source: backend
+    destination: /opt/gladius/backend
+
+file_exists_behavior: OVERWRITE
+
+hooks:
+  ApplicationStop:
+    - location: scripts/application_stop.sh
+      timeout: 60
+      runas: gladius
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 120
+      runas: root
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 180
+      runas: root
+  ApplicationStart:
+    - location: scripts/application_start.sh
+      timeout: 120
+      runas: gladius
+  ValidateService:
+    - location: scripts/validate_service.sh
+      timeout: 180
+      runas: gladius

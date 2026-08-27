@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+  pre_build:
+    commands:
+      - cd backend
+      - npm ci --omit=dev
+      # - npm run lint      # uncomment once a lint script exists
+      # - npm test          # uncomment once tests exist
+      - cd ..
+  build:
+    commands:
+      - echo "Packaging revision $CODEBUILD_RESOLVED_SOURCE_VERSION"
+
+artifacts:
+  files:
+    - 'backend/**/*'
+    - 'appspec.yml'
+    - 'scripts/**/*'
+  name: gladius-backend 
