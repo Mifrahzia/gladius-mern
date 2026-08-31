@@ -40,9 +40,11 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/email', emailRoutes);
 
 // Health check endpoint
-app.get('/api/health', (req, res) => res.json({ 
-  ok: true, 
+app.get('/api/health', (req, res) => res.json({
+  ok: true,
   message: 'Backend server is running',
+  version: '1.0.1',
+  commit: process.env.CODEBUILD_RESOLVED_SOURCE_VERSION || 'local',
   timestamp: new Date().toISOString()
 }));
 
